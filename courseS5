@@ -1,0 +1,86 @@
+import pandas as pd
+import numpy as np
+
+print ("Hello Capstone Project Course!")
+
+import numpy as np 
+import pandas as pd 
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+import json 
+!conda install -c conda-forge geopy --yes 
+from geopy.geocoders import Nominatim 
+import requests 
+from pandas.io.json import json_normalize 
+
+import matplotlib.cm as cm
+import matplotlib.colors as colors
+
+from sklearn.cluster import KMeans
+!conda install -c conda-forge folium=0.5.0 --yes 
+import folium 
+print('Libraries imported.')
+
+df_cvd19 = df_data_1[['CiteKey','Lat','Lon','Classification']]
+df_cvd19.head()
+
+
+locations = df_cvd19[['Lat', 'Lon']]
+locationlist = locations.values.tolist()
+len(locationlist)
+locationlist
+
+map_nynj = folium.Map(location=[40.764115, -74.011843], zoom_start=10)
+for point in range(0, len(locationlist)):
+    folium.Marker(locationlist[point], popup=df_cvd19['CiteKey'][point]).add_to(map_nynj)
+map_nynj
+
+body = client_1ee56914d58741c6b2b0e25da68c94e7.get_object(Bucket='courseracapstoneproject-donotdelete-pr-wwgag4s7emu6id',Key='COVID19m_Cites_Dataset.csv')['Body']
+# add missing __iter__ method, so pandas accepts body as file-like object
+if not hasattr(body, "__iter__"): body.__iter__ = types.MethodType( __iter__, body )
+
+df_data_2 = pd.read_csv(body)
+df_data_2.head()
+
+
+df_cvd19m = df_data_2[['CiteKey','Lat','Lon','Classification']]
+df_cvd19m.head()
+
+locationsm = df_cvd19m[['Lat', 'Lon']]
+locationlist2 = locationsm.values.tolist()
+len(locationlist2)
+locationlist2
+
+map_nynj2 = folium.Map(location=[40.764115, -74.011843], zoom_start=10)
+for point in range(0, len(locationlist2)):
+    folium.Marker(locationlist2[point], popup=df_cvd19m['CiteKey'][point],icon=folium.Icon(color='red',icon='info-sign')).add_to(map_nynj2)
+map_nynj2
+
+body = client_1ee56914d58741c6b2b0e25da68c94e7.get_object(Bucket='courseracapstoneproject-donotdelete-pr-wwgag4s7emu6id',Key='COVID19s_Cites_Dataset.csv')['Body']
+# add missing __iter__ method, so pandas accepts body as file-like object
+if not hasattr(body, "__iter__"): body.__iter__ = types.MethodType( __iter__, body )
+
+df_data_3 = pd.read_csv(body)
+df_data_3.head()
+
+df_cvd19s = df_data_3[['CiteKey','Lat','Lon','Classification']]
+df_cvd19s.head()
+
+locationss = df_cvd19s[['Lat', 'Lon']]
+locationlist3 = locationss.values.tolist()
+len(locationlist3)
+locationlist3
+
+
+map_nynj3 = folium.Map(location=[40.764115, -74.011843], zoom_start=10)
+for point in range(0, len(locationlist3)):
+    folium.Marker(locationlist3[point], popup=df_cvd19s['CiteKey'][point],icon=folium.Icon(color='green',icon='info-sign')).add_to(map_nynj3)
+map_nynj3
+
+for point in range(0, len(locationlist3)):
+    folium.Marker(locationlist3[point], popup=df_cvd19s['CiteKey'][point],icon=folium.Icon(color='green',icon='info-sign')).add_to(map_nynj4)
+for point in range(0, len(locationlist2)):
+    folium.Marker(locationlist2[point], popup=df_cvd19m['CiteKey'][point],icon=folium.Icon(color='red',icon='info-sign')).add_to(map_nynj4)
+map_nynj4
+
+map_nynj4.save(outfile='map_nynj4.html')
